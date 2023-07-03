@@ -6,9 +6,10 @@ from recipes import views
 
 from .test_recipe_base import RecipeTestBase
 
-#from django.contrib.auth.models import User
+# from django.contrib.auth.models import User
 
 
+# @skip('Pular teste!')
 class RecipeViewsTest(RecipeTestBase):
     def test_recipe_home_view_function_is_correct(self):
         view = resolve(reverse('recipes:home'))
@@ -22,7 +23,6 @@ class RecipeViewsTest(RecipeTestBase):
         response = self.client.get(reverse('recipes:home'))
         self.assertTemplateUsed(response, 'recipes/pages/home.html')
 
-    # @skip('Pular teste!')
     def test_recipe_home_view_template_shows_no_recipes_found_if_no_recipes(self):
         response = self.client.get(reverse('recipes:home'))
         self.assertIn('<h1>No recipes found here!</h1>',
