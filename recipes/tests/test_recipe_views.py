@@ -32,6 +32,7 @@ class RecipeViewsTest(RecipeTestBase):
         # self.fail('Falha forçada, para terminar de escrever o teste')
 
     def test_recipe_home_template_loads_recipes(self):
+        # need recipe
         self.make_recipe()
         response = self.client.get(reverse('recipes:home'))
         content = response.content.decode('utf-8')
@@ -41,6 +42,8 @@ class RecipeViewsTest(RecipeTestBase):
         self.assertEqual(len(response_context_recipes), 1)
 
     def test_recipe_home_template_dont_load_not_published_recipe(self):
+        # test for recipe is_published=False dont show any recipe
+        # need recipe
         self.make_recipe(is_published=False)
         response = self.client.get(reverse('recipes:home'))
 
@@ -59,6 +62,7 @@ class RecipeViewsTest(RecipeTestBase):
 
     def test_recipe_category_template_loads_recipes(self):
         needed_title = 'category test'
+        # need recipe
         self.make_recipe(title=needed_title)
         response = self.client.get(reverse('recipes:category', args=(1,)))
         content = response.content.decode('utf-8')
@@ -66,6 +70,8 @@ class RecipeViewsTest(RecipeTestBase):
         self.assertIn(needed_title, content)
 
     def test_recipe_category_template_dont_load_not_published_recipe(self):
+        # test for recipe is_published=False dont show any recipe
+        # need recipe
         recipe = self.make_recipe(is_published=False)
         response = self.client.get(
             reverse('recipes:recipe', kwargs={'id': recipe.category.id}))
@@ -83,6 +89,7 @@ class RecipeViewsTest(RecipeTestBase):
 
     def test_recipe_detail_template_loads_the_correct_recipe(self):
         needed_title = 'detail page - load one recipe'
+        # need recipe
         self.make_recipe(title=needed_title)
         response = self.client.get(reverse('recipes:recipe', kwargs={'id': 1}))
         content = response.content.decode('utf-8')
@@ -90,6 +97,8 @@ class RecipeViewsTest(RecipeTestBase):
         self.assertIn(needed_title, content)
 
     def test_recipe_detail_template_dont_load_not_published_recipe(self):
+        # test for recipe is_published=False dont show any recipe
+        # need recipe
         recipe = self.make_recipe(is_published=False)
         response = self.client.get(
             reverse('recipes:recipe', kwargs={'id': recipe.id}))
