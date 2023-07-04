@@ -40,6 +40,13 @@ class RecipeViewsTest(RecipeTestBase):
         self.assertIn('Recipe Title', content)
         self.assertEqual(len(response_context_recipes), 1)
 
+    def test_recipe_home_template_dont_load_not_published_recipe(self):
+        self.make_recipe(is_published=False)
+        response = self.client.get(reverse('recipes:home'))
+
+        self.assertIn('<h1>No recipes found here!</h1>',
+                      response.content.decode('utf-8'))
+
     def test_recipe_category_view_function_is_correct(self):
         view = resolve(reverse('recipes:category',
                        kwargs={'category_id': 1000}))
