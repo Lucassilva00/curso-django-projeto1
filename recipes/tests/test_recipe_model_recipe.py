@@ -15,7 +15,7 @@ class RecipeModelTest(RecipeTestBase):
             author=self.make_author(username='newusertest'),
             title='Recipe Title',
             description='Recipe Description',
-            slug='recipe-slug',
+            slug='recipe-slugs',
             preparation_time=10,
             preparation_time_unit='Minutos',
             servings=5,
@@ -51,11 +51,13 @@ class RecipeModelTest(RecipeTestBase):
             self.recipe.full_clean()
 
     def test_recipe_preparation_steps_is_html_is_false_by_default(self):
+        # need recipe
         recipe = self.make_recipes_no_defaults()
         self.assertFalse(recipe.preparation_steps_is_html,
                          msg='Recipe preparation_steps_is_html is not False')
 
     def test_recipe_is_published_is_false_by_default(self):
+        # need recipe
         recipe = self.make_recipes_no_defaults()
         self.assertFalse(recipe.is_published,
                          msg='Recipe is_published is not False')
