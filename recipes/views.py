@@ -2,7 +2,8 @@
 # from django.http import HttpResponse - Para o if2 com comentário.
 # Serve para mostrar página que não existe.
 
-from django.core.paginator import Paginator
+import os
+
 from django.db.models import Q
 from django.http.response import Http404
 from django.shortcuts import get_list_or_404, get_object_or_404, render
@@ -15,11 +16,14 @@ from .models import Recipe
 # Cliente pede <- Server responde/devolve
 
 
+PER_PAGE = os.environ.get('PER_PAGE', 6)
+
+
 def home(request):
     recipes = Recipe.objects.filter(is_published=True).order_by('-id')
 
     page_obj, pagination_range = make_pagination(
-        request, recipes, 9
+        request, recipes, PER_PAGE
     )
 
     return render(request, 'recipes/pages/home.html', context={
@@ -33,7 +37,7 @@ def category(request, category_id):
         category__id=category_id, is_published=True).order_by('-id'))
 
     page_obj, pagination_range = make_pagination(
-        request, recipes, 9
+        request, recipes, PER_PAGE
     )
 
     # 1 if not recipes:
@@ -71,7 +75,7 @@ def search(request):
     ).order_by('-id')
 
     page_obj, pagination_range = make_pagination(
-        request, recipes, 9
+        request, recipes, PER_PAGE
     )
 
     return render(request, 'recipes/pages/search.html',
