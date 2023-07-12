@@ -28,6 +28,8 @@ def home(request):
     )
 
     messages.error(request, 'Que legal sua mensagem foi um sucesso!')
+    messages.success(request, 'Epa, você foi pesquisar algo que eu vi.')
+    messages.info(request, 'Epa, você foi pesquisar algo que eu vi.')
 
     return render(request, 'recipes/pages/home.html', context={
         'recipes': page_obj,
