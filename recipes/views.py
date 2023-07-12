@@ -27,7 +27,7 @@ def home(request):
         request, recipes, PER_PAGE
     )
 
-    messages.success(request, 'Que legal sua mensagem foi um sucesso!')
+    messages.error(request, 'Que legal sua mensagem foi um sucesso!')
 
     return render(request, 'recipes/pages/home.html', context={
         'recipes': page_obj,
