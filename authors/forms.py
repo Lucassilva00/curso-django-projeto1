@@ -49,7 +49,11 @@ class RegisterForm(forms.ModelForm):
 
         # Altera os help texts
         help_texts = {
-            'email': 'The email must be valid'
+            'email': 'The email must be valid',
+            'password': 'Password must have at least one uppercase letter, '
+            'one lowercase letter and one number. The length should be '
+            'at least 8 characters.'
+
         }
 
         # Altera as mensagens de erro
@@ -68,6 +72,7 @@ class RegisterForm(forms.ModelForm):
                 'placeholder': 'Type your password here...'
             }),
         }
+    # método clean_"alguma coisa" serve para o campo."
 
     def clean_password(self):
         data = self.cleaned_data.get('password')
@@ -91,3 +96,20 @@ class RegisterForm(forms.ModelForm):
                 params={'value': '"John Doe"'})
 
         return data
+    # método para validar o formulário como um todo
+
+    def clean(self):
+        cleaned_data = super().clean()
+
+        password = cleaned_data.get('password')
+        password2 = cleaned_data.get('password2')
+
+        if password != password2:
+            password_confirmation_error = ValidationError(
+                'Password and password2 must be equal.', code='invalid')
+
+            raise ValidationError({'password': password_confirmation_error,  # noqa E501
+                                   'password2': [
+                                       password_confirmation_error,
+                                       # 'Another error',(Exemplo usado para saber que pode ser passado uma lista e pode passar string também)
+                                   ]})
