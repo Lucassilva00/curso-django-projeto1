@@ -34,12 +34,12 @@ class RegisterForm(forms.ModelForm):
                         'Type your first name...')
         add_placeholder(self.fields['last_name'],
                         'Type your last name...')
+        add_placeholder(self.fields['password'], 'Type your password...')
+        add_placeholder(self.fields['password2'], 'Repeat your password...')
 
     password = forms.CharField(
         required=True,
-        widget=forms.PasswordInput(attrs={
-            'placeholder': 'Your password'
-        }),
+        widget=forms.PasswordInput(),
         error_messages={
             'required': 'Password must not be empty'
         },
@@ -52,9 +52,7 @@ class RegisterForm(forms.ModelForm):
     )
 
     password2 = forms.CharField(required=True,
-                                widget=forms.PasswordInput(attrs={
-                                    'placeholder': 'Repeat your password here...'  # noqa E501
-                                }))
+                                widget=forms.PasswordInput())
 
     class Meta:
         model = User
@@ -92,15 +90,6 @@ class RegisterForm(forms.ModelForm):
             }
         }
 
-        widgets = {
-            # 'first_name': forms.TextInput(attrs={
-            #    'placeholder': 'Type your name here...',}),
-            # 'class': 'input text-input' #É possível add classe também
-
-            'password': forms.PasswordInput(attrs={
-                'placeholder': 'Type your password here...'
-            }),
-        }
     # método clean_"alguma coisa" serve para o campo."
 
     def clean_password(self):
