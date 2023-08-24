@@ -129,5 +129,5 @@ class RegisterForm(forms.ModelForm):
             raise ValidationError({'password': password_confirmation_error,  # noqa E501
                                    'password2': [
                                        password_confirmation_error,
-                                       # 'Another error',(Exemplo usado para saber que pode ser passado uma lista e pode passar string também)
+                                       # 'Another error',(Exemplo usado para saber que pode ser passado uma lista e pode passar string também) # noqa E501
                                    ]})
