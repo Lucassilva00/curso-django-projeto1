@@ -37,6 +37,18 @@ class RegisterForm(forms.ModelForm):
         add_placeholder(self.fields['password'], 'Type your password...')
         add_placeholder(self.fields['password2'], 'Repeat your password...')
 
+    username = forms.CharField(
+        error_messages={'required': 'This field must not be empty',
+                        'min_length': 'Username must have at least 4 characters',  # noqa E501
+                        'max_length': 'Username must have 150 characters or less'},  # noqa E501
+        label='Username',
+        help_text=('Username must have letters, numbers or one of those @.+-_. '  # noqa E501
+            'The length should be between 4 and 150 characters.'),
+        min_length=4,
+        max_length=150,
+
+    )
+
     first_name = forms.CharField(
         error_messages={'required': 'Write your first name'},
         label='First name',
@@ -84,22 +96,12 @@ class RegisterForm(forms.ModelForm):
         ]
         # semelhante a criação pelo método acima de escolher os campos, com exclude todos campos são selecionados menos aqueles presentes no exclude # noqa E501
         # exclude = ['first_name']
-        labels = {
-            'username': 'Username',
-        }
         # Altera os help texts
         help_texts = {
             'password': 'Password must have at least one uppercase letter, '
             'one lowercase letter and one number. The length should be '
             'at least 8 characters.'
 
-        }
-
-        # Altera as mensagens de erro
-        error_messages = {
-            'username': {
-                'required': 'This field must not be empty'
-            }
         }
 
     # método clean_"alguma coisa" serve para o campo."
