@@ -37,8 +37,23 @@ class RegisterForm(forms.ModelForm):
         add_placeholder(self.fields['password'], 'Type your password...')
         add_placeholder(self.fields['password2'], 'Repeat your password...')
 
+    first_name = forms.CharField(
+        error_messages={'required': 'Write your first name'},
+        label='First name',
+    )
+
+    last_name = forms.CharField(
+        error_messages={'required': 'Write your last name'},
+        label='Last name',
+    )
+
+    email = forms.EmailField(
+        error_messages={'required': 'Type your email'},
+        label='Email',
+        help_text='The email must be valid',
+    )
+
     password = forms.CharField(
-        required=True,
         widget=forms.PasswordInput(),
         error_messages={
             'required': 'Password must not be empty'
@@ -52,9 +67,10 @@ class RegisterForm(forms.ModelForm):
         label='Password'
     )
 
-    password2 = forms.CharField(required=True,
-                                widget=forms.PasswordInput(),
-                                label='Password2'
+    password2 = forms.CharField(widget=forms.PasswordInput(),
+                                label='Password2',
+                                error_messages={
+                                    'required': 'Please, repeat your password'}
                                 )
 
     class Meta:
@@ -68,18 +84,11 @@ class RegisterForm(forms.ModelForm):
         ]
         # semelhante a criação pelo método acima de escolher os campos, com exclude todos campos são selecionados menos aqueles presentes no exclude # noqa E501
         # exclude = ['first_name']
-
         labels = {
-            'first_name': 'First name',
-            'last_name': 'Last name',
             'username': 'Username',
-            'email': 'Email',
-
         }
-
         # Altera os help texts
         help_texts = {
-            'email': 'The email must be valid',
             'password': 'Password must have at least one uppercase letter, '
             'one lowercase letter and one number. The length should be '
             'at least 8 characters.'
