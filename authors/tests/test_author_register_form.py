@@ -75,5 +75,5 @@ class AuthorRegisterFormIntegrationTest(DjangoTestCase):
         url = reverse('authors:create')
         response = self.client.post(url, data=self.form_data, follow=True)
 
-        #self.assertIn(msg, response.content.decode('utf-8'))
+        self.assertIn(msg, response.content.decode('utf-8'))
         self.assertIn(msg, response.context['form'].errors.get(field))
