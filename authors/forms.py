@@ -130,6 +130,17 @@ class RegisterForm(forms.ModelForm):
       # return data
     # método para validar o formulário como um todo
 
+    def clean_email(self):
+        mail = self.cleaned_data.get('email', '')
+        exists = User.objects.filter(email=mail).exists()
+
+        if exists:
+            raise ValidationError(
+                'This e-mail is already in use.', code='invalid',
+            )
+
+        return mail
+
     def clean(self):
         cleaned_data = super().clean()
 
